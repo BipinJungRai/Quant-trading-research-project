@@ -41,12 +41,27 @@ def calculate_metrics(returns, risk_free_rate=0.0):
         peak = cum_returns.cummax()
         drawdown = (cum_returns - peak) / peak
         max_drawdown = drawdown.min()
-        
+
+        # Sortino Ratio (Downside Deviation)
+        downside_returns = r[r < 0]
+        downside_vol = downside_returns.std() * np.sqrt(252)
+        sortino = (mean_annual_return - risk_free_rate) / downside_vol if downside_vol != 0 else 0
+
+        # Calmar Ratio (CAGR / Max Drawdown)
+        calmar = cagr / abs(max_drawdown) if max_drawdown != 0 else 0
+
+        # Win Rate (Daily) - % of days with positive returns
+        # Note: This is daily win rate, not per-trade win rate, but useful for vectorised backtest proxy
+        win_rate = len(r[r > 0]) / len(r)
+
         metrics[col] = {
             'CAGR': cagr,
             'Volatility': volatility,
             'Sharpe Ratio': sharpe,
-            'Max Drawdown': max_drawdown
+            'Sortino Ratio': sortino,
+            'Calmar Ratio': calmar,
+            'Max Drawdown': max_drawdown,
+            'Win Rate': win_rate
         }
         
     return pd.DataFrame(metrics).T
