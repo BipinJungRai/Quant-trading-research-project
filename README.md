@@ -1,5 +1,7 @@
 # Quant Trading Research Project
 
+> A modular Python framework for backtesting factor-based trading strategies on cryptocurrency markets (BTC-USD, ETH-USD).
+
 ## Overview
 This repository contains a modular Python framework designed for researching, backtesting, and evaluating factor-based trading strategies on cryptocurrency markets (BTC-USD and ETH-USD). The project aims to provide a clean, extensible codebase for quantitative finance research, allowing users to easily implement new signals, run vectorised backtests, and analyze performance metrics.
 
